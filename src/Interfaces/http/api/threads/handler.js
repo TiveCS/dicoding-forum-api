@@ -10,8 +10,6 @@ class ThreadsHandler {
   async postThreadHandler(request, h) {
     const addThreadUseCase = this._container.getInstance(AddThreadUseCase.name);
 
-    console.log(request.auth);
-
     const payload = {
       ...request.payload,
       owner: request.auth.credentials.id,
