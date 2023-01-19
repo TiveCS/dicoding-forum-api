@@ -18,7 +18,6 @@ describe('a AddedThread entities', () => {
     const payload = {
       id: 123,
       title: true,
-      body: 'ini body',
       owner: 123,
     };
 
@@ -33,7 +32,6 @@ describe('a AddedThread entities', () => {
     const payload = {
       id: 'thread-123',
       title: 'sebuah thread',
-      body: 'ini adalah body thread',
       owner: 'user-123',
     };
 
@@ -43,7 +41,6 @@ describe('a AddedThread entities', () => {
     // Assert
     expect(addedThread.id).toEqual(payload.id);
     expect(addedThread.title).toEqual(payload.title);
-    expect(addedThread.body).toEqual(payload.body);
     expect(addedThread.owner).toEqual(payload.owner);
   });
 });
