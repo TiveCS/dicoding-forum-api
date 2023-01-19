@@ -1,11 +1,9 @@
 const ThreadRepositoryPostgres = require('../ThreadRepositoryPostgres');
-const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
-const AuthenticationError = require('../../../Commons/exceptions/AuthenticationError');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const pool = require('../../database/postgres/pool');
 
-describe('a ThreadRepository entities', () => {
+describe('ThreadRepository postgres', () => {
   afterAll(async () => {
     await pool.end();
   });
