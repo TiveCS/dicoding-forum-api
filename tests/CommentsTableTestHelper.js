@@ -19,15 +19,6 @@ const CommentsTableTestHelper = {
     return result.rows[0];
   },
 
-  async findCommentsByThreadId(id) {
-    const result = await pool.query({
-      text: 'SELECT * FROM comments WHERE thread_id = $1',
-      values: [id],
-    });
-
-    return result.rows;
-  },
-
   async cleanTable() {
     await pool.query('DELETE FROM comments WHERE 1=1');
     await pool.query('DELETE FROM threads WHERE 1=1');
