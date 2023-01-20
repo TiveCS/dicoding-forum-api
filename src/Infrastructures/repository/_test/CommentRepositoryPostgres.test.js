@@ -174,7 +174,9 @@ describe('CommentRepository postgres', () => {
         'comment-123',
       );
 
-      expect(comment).not.toBeDefined();
+      expect(comment).toBeDefined();
+      expect(comment.deleted_at).toBeDefined();
+      expect(comment.deleted_at).not.toBeNull();
     });
   });
 
