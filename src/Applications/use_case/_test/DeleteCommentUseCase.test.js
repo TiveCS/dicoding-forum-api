@@ -15,6 +15,10 @@ describe('DeleteCommentUseCase', () => {
 
     const mockCommentRepository = new CommentRepository();
 
+    mockCommentRepository.verifyCommentOwner = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve());
+
     mockCommentRepository.deleteCommentById = jest
       .fn()
       .mockImplementation(() => Promise.resolve(expectedDeletedComment));
