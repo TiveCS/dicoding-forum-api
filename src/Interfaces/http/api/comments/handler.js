@@ -33,7 +33,22 @@ class CommentsHandler {
     return response;
   }
 
-  async deleteCommentHandler(request, h) {}
+  async deleteCommentHandler(request, h) {
+    const deleteCommentUseCase = this._container.getInstance(
+      DeleteCommentUseCase.name,
+    );
+
+    const owner = request.auth.credentials.id;
+    const useCasePayload = {
+      commentId: request.params.commentId,
+    };
+
+    await deleteCommentUseCase.execute(useCasePayload, owner);
+
+    return {
+      status: 'success',
+    };
+  }
 }
 
 module.exports = CommentsHandler;
