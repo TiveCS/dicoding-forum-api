@@ -8,7 +8,11 @@ class AddCommentUseCase {
   }
 
   async execute(useCasePayload, owner) {
-    const newComment = new NewComment({ ...useCasePayload, owner });
+    const payload = {
+      ...useCasePayload,
+      owner,
+    };
+    const newComment = new NewComment(payload);
 
     await this._threadRepository.verifyThreadIsExist(newComment.threadId);
 
