@@ -4,9 +4,7 @@ const GetThreadDetailsUseCase = require('../GetThreadDetailsUseCase');
 describe('GetThreadDetailsUseCase', () => {
   it('should orchestrating the get thread details action correctly', async () => {
     // Arrange
-    const useCasePayload = {
-      threadId: 'thread-123',
-    };
+    const useCasePayload = 'thread-123';
 
     const expectedThreadDetails = {
       id: 'thread-123',
