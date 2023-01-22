@@ -1,5 +1,6 @@
 const pool = require('../../database/postgres/pool');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const container = require('../../container');
 const createServer = require('../createServer');
 const AuthenticationTokenManager = require('../../../Applications/security/AuthenticationTokenManager');
@@ -11,6 +12,58 @@ describe('/threads endpoints', () => {
 
   afterEach(async () => {
     await ThreadsTableTestHelper.cleanTable();
+    await UsersTableTestHelper.cleanTable();
+  });
+
+  describe('when GET /threads/{threadId}', () => {
+    it('should response 404 when thread not found', async () => {
+      // Arrange
+      const server = await createServer(container);
+
+      // Action
+      const response = await server.inject({
+        method: 'GET',
+        url: '/threads/thread-123',
+      });
+
+      // Assert
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(404);
+      expect(responseJson.status).toEqual('fail');
+      expect(responseJson.message).toEqual('Thread tidak ditemukan');
+    });
+
+    it('should response 200 and thread detail', async () => {
+      // Arrange
+      const threadId = 'thread-123';
+      const addThreadPayload = {
+        title: 'Dicoding Indonesia',
+        body: 'Dicoding Indonesia',
+      };
+
+      await UsersTableTestHelper.addUser({
+        id: 'user-123',
+      });
+
+      await ThreadsTableTestHelper.addThread({
+        id: threadId,
+        ...addThreadPayload,
+      });
+
+      const server = await createServer(container);
+
+      // Action
+      const response = await server.inject({
+        method: 'GET',
+        url: `/threads/${threadId}`,
+      });
+
+      // Assert
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(200);
+      expect(responseJson.status).toEqual('success');
+      expect(responseJson.data.thread).toBeDefined();
+    });
   });
 
   describe('when POST /threads', () => {
